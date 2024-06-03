@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Save Code Decoder</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+    <h1>Save Code Decoder</h1>
+    <form id="decoderForm">
+        <label for="playerName">Player Name:</label>
+        <input type="text" id="playerName" name="playerName" required>
+
+        <label for="saveCode">Save Code:</label>
+        <input type="text" id="saveCode" name="saveCode" required>
+
+        <label for="actionType">Action:</label>
+        <select id="actionType" name="actionType">
+            <option value="newCode">Turn Into New Code</option>
+            <option value="checkRewards">Check Rewards</option>
+        </select>
+
+        <button type="submit">Decode</button>
+    </form>
+    <div id="results">
+
+        <div id="newCodeSection" style="display: none;">
+            <h3>New Code</h3>
+            <p id="newCode"></p>
+        </div>
+
+        <h2>Decoded Values</h2>
+
+        <h3>Game Stats</h3>
+        <table id="gameStatsTable">
+            <thead>
+            <tr>
+                <th>Attribute</th>
+                <th>Value</th>
+            </tr>
+            </thead>
+            <tbody id="gameStatsBody"></tbody>
+        </table>
+
+        <h3>Round Times</h3>
+        <table id="roundTimesTable">
+            <thead>
+            <tr>
+                <th>Round</th>
+                <th>Time</th>
+            </tr>
+            </thead>
+            <tbody id="roundTimesBody"></tbody>
+        </table>
+
+        <h3>Rewards</h3>
+        <table id="rewardsTable">
+            <thead>
+            <tr>
+                <th>Reward</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody id="rewardsBody"></tbody>
+        </table>
+
+
+    </div>
+</div>
+<script src="bundle.js"></script>
+</body>
+</html>
