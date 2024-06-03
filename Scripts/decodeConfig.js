@@ -1,3 +1,4 @@
+// New Version Values 4.2.0+
 const decodeConfig = [
     ["Purple Fire", 1],    // Rewards //0
     ["Deaths", 99999],     // Game Stats
@@ -40,7 +41,7 @@ const decodeConfig = [
     ["Butterfly Aura", 1]    // Rewards
 ];
 
-// New section for values_max_vals
+// Values for 4.1.5 versions and previous
 const oldDecodeConfig = [
     ["RandomVar9", 8],    // RandomVar9
     ["RandomVar8", 8],    // RandomVar8

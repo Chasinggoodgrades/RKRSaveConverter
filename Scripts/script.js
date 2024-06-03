@@ -27,8 +27,8 @@ document.getElementById('decoderForm').addEventListener('submit', function(event
     const loadSuccess = savecode.Load(playerName, saveCode, 1);
 
     gameStatsBody.innerHTML = ''; // Clear previous results
-    roundTimesBody.innerHTML = ''; // Clear previous results
-    rewardsBody.innerHTML = ''; // Clear previous results
+    roundTimesBody.innerHTML = '';
+    rewardsBody.innerHTML = '';
     newCodeSection.style.display = 'none'; // Hide new code section
 
     if (!loadSuccess) {
@@ -44,9 +44,6 @@ document.getElementById('decoderForm').addEventListener('submit', function(event
         savecode.Load(playerName, newCodeElement.textContent, 1);
     }
 
-
-
-
     decodeConfig.slice().reverse().forEach(([name, max_val]) => {
         const decodedValue = savecode.Decode(max_val);
         let row = document.createElement('tr');
@@ -55,6 +52,7 @@ document.getElementById('decoderForm').addEventListener('submit', function(event
         nameCell.textContent = name;
         valueCell.textContent = decodedValue;
 
+        // Rewards
         if (max_val === 1) {
             if (decodedValue === 1) {
                 valueCell.classList.add('green-cell');
@@ -66,11 +64,13 @@ document.getElementById('decoderForm').addEventListener('submit', function(event
             row.appendChild(valueCell);
             rewardsBody.appendChild(row);
         }
+        // Round Times
         else if (name.includes("Time")) {
             row.appendChild(nameCell);
             row.appendChild(valueCell);
             roundTimesBody.appendChild(row);
         }
+        // Game Stats
         else {
             row.appendChild(nameCell);
             row.appendChild(valueCell);

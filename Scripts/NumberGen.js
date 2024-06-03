@@ -1,6 +1,7 @@
 let s1 = [];
 let s2 = 0;
 
+// WC3 Lookup Table
 const tr = [
     0x9927148E, 0x08C7AAFD, 0x1F3EE6D5, 0xDA55BBF6,
     0x6A4AA075, 0xFF97BDE8, 0x9FBC9BDE, 0x46A18A81,
@@ -37,12 +38,14 @@ function random() {
     return s2;
 }
 
+// WC3 SetRandomSeed function
 function SetRandomSeed(seed) {
     s1 = [(seed + (seed < 0 ? 1 << 32 : 0)) % 61, (seed + (seed < 0 ? 1 << 32 : 0)) % 59, (seed + (seed < 0 ? 1 << 32 : 0)) % 53, (seed + (seed < 0 ? 1 << 32 : 0)) % 47];
     s2 = seed;
     random();
 }
 
+// WC3 GetRandomInt function
 function GetRandomInt(l, h) {
     const i = random();
     const j = Math.abs(h - l) + 1;

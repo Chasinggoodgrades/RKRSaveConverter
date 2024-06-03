@@ -9,8 +9,9 @@ class Savecode {
         this.digits = 0;
     }
 
+    // Both functions below use WC3 functionality.
     setSeed(seed) {
-        SetRandomSeed(seed); // Use the new random seed function
+        SetRandomSeed(seed);
     }
 
     GetRandomInt(maxValue) {

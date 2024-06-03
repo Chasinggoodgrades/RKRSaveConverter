@@ -51,7 +51,7 @@ function generateNewCode(savecode, player_name) {
 
     Object.entries(translationMap).forEach(([oldIndex, newIndex]) => {
         if (newIndex !== null && newIndex !== 'SpecialCase') {
-            if((newIndex === 18 || newIndex === 19 || newIndex === 20 || newIndex === 21 || newIndex === 22) && oldValues[oldIndex] >= 300)
+            if((newIndex === 18 || newIndex === 19 || newIndex === 20 || newIndex === 21 || newIndex === 22) && oldValues[oldIndex] >= 300) // Time
                 newValues[newIndex] = 300;
             else
                 newValues[newIndex] = oldValues[oldIndex];
@@ -90,10 +90,10 @@ function handleSpecialCases(oldIndex, oldValues, newValues) {
             break;
         }
         case 16: {
-            const bitPositions = [15, 14, 13, 12]; // Corresponding newValues indices
+            const bitPositions = [15, 14, 13, 12];
             const maxBitMask = 0b1111; // 4 bits for AllNitros
             if (value > maxBitMask) {
-                bitPositions.forEach(index => newValues[index] = 1); // Grant all rewards
+                bitPositions.forEach(index => newValues[index] = 1);
             } else {
                 for (let i = 0; i < bitPositions.length; i++) {
                     if (value >> (bitPositions.length - 1 - i) & 1) {
@@ -104,10 +104,10 @@ function handleSpecialCases(oldIndex, oldValues, newValues) {
             break;
         }
         case 17: {
-            const bitPositions = [36, 37, 29, 28, 27, 26, 25]; // Corresponding newValues indices
+            const bitPositions = [36, 37, 29, 28, 27, 26, 25];
             const maxBitMask = 0b1111111; // 7 bits for RandomVar3
             if (value > maxBitMask) {
-                bitPositions.forEach(index => newValues[index] = 1); // Grant all rewards
+                bitPositions.forEach(index => newValues[index] = 1);
             } else {
                 for (let i = 0; i < bitPositions.length; i++) {
                     if (value >> (bitPositions.length - 1 - i) & 1) {
@@ -118,10 +118,10 @@ function handleSpecialCases(oldIndex, oldValues, newValues) {
             break;
         }
         case 24: {
-            const bitPositions = [24, 23, 22, 21, 20]; // Corresponding newValues indices
-            const maxBitMask = 0b11111; // 5 bits for this case
+            const bitPositions = [24, 23, 22, 21, 20];
+            const maxBitMask = 0b11111; // 5 bits RandomVar4
             if (value > maxBitMask) {
-                bitPositions.forEach(index => newValues[index] = 1); // Grant all rewards
+                bitPositions.forEach(index => newValues[index] = 1);
             } else {
                 for (let i = 0; i < bitPositions.length; i++) {
                     if (value >> (bitPositions.length - 1 - i) & 1) {
@@ -132,20 +132,20 @@ function handleSpecialCases(oldIndex, oldValues, newValues) {
             break;
         }
         case 25: {
-            const bitPositions = [34]; // Corresponding newValues indices
-            const maxBitMask = 0b1000; // 4th bit for this case
+            const bitPositions = [34];
+            const maxBitMask = 0b1000; // 4th bit for RandomVar5
             if (value > maxBitMask) {
-                bitPositions.forEach(index => newValues[index] = 1); // Grant all rewards
+                bitPositions.forEach(index => newValues[index] = 1);
             } else {
                 if (value >> 3 & 1) newValues[34] = 1;
             }
             break;
         }
         case 26: {
-            const bitPositions = [38]; // Corresponding newValues indices
-            const maxBitMask = 0b1; // 1st bit for this case
+            const bitPositions = [38];
+            const maxBitMask = 0b1; // 1st bit for RandomVar6
             if (value > maxBitMask) {
-                bitPositions.forEach(index => newValues[index] = 1); // Grant all rewards
+                bitPositions.forEach(index => newValues[index] = 1);
             } else {
                 if (value & 1) newValues[38] = 1;
             }
