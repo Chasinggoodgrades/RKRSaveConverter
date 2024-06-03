@@ -180,9 +180,9 @@ function generateNewCode(savecode, player_name) {
         2: null, // Fire (Skipped)
         3: 3,    // Games
         4: 4,    // Wins
-        5: 11,   // Nitro
-        6: 'SpecialCase', // RandomVar2
-        7: 5,    // WinStreak
+        6: 11,   // Nitro
+        7: 'SpecialCase', // RandomVar2
+        5: 5,    // WinStreak
         8: 17,   // BlueFire
         9: 16,  // MysticFire
         10: 18,  // PinkFire
@@ -209,8 +209,12 @@ function generateNewCode(savecode, player_name) {
 
     Object.entries(translationMap).forEach(([oldIndex, newIndex]) => {
         if (newIndex !== null && newIndex !== 'SpecialCase') {
-            newValues[newIndex] = oldValues[oldIndex];
-        } else if (newIndex === 'SpecialCase') {
+            if((newIndex === 18 || newIndex === 19 || newIndex === 20 || newIndex === 21 || newIndex === 22) && oldValues[oldIndex] >= 300)
+                newValues[newIndex] = 300;
+            else
+                newValues[newIndex] = oldValues[oldIndex];
+        }
+        else if (newIndex === 'SpecialCase') {
             handleSpecialCases(parseInt(oldIndex), oldValues, newValues);
         }
     });
@@ -229,54 +233,88 @@ function generateNewCode(savecode, player_name) {
 function handleSpecialCases(oldIndex, oldValues, newValues) {
     let value = oldValues[oldIndex];
     switch (oldIndex) {
-        case 6:
-            // Logic for RandomVar2
-            // Modify newValues as needed
-            if (value >> 7 & 1) newValues[33] = 1; // Lightnings
-            if (value >> 6 & 1) newValues[32] = 1;
-            if (value >> 5 & 1) newValues[31] = 1;
-            if (value >> 4 & 1) newValues[30] = 1;
-            if (value >> 3 & 1) newValues[19] = 1; // White Fire
-            if (value >> 2 & 1) newValues[18] = 1; // Pink Fire
-            if (value >> 1 & 1) newValues[16] = 1;
-            if (value & 1) newValues[17] = 1;
+        case 7: {
+            const bitPositions = [33, 32, 31, 30, 19, 18, 16, 17]; // Corresponding newValues indices
+            const maxBitMask = 0b11111111; // 8 bits for RandomVar2
+            if (value > maxBitMask) {
+                bitPositions.forEach(index => newValues[index] = 1); // Grant all rewards
+            } else {
+                for (let i = 0; i < bitPositions.length; i++) {
+                    if (value >> (bitPositions.length - 1 - i) & 1) {
+                        newValues[bitPositions[i]] = 1;
+                    }
+                }
+            }
             break;
-        case 16:
-            // Logic for AllNitros
-            // Modify newValues as needed
-            if (value >> 3 & 1) newValues[15] = 1;
-            if (value >> 2 & 1) newValues[14] = 1;
-            if (value >> 1 & 1) newValues[13] = 1;
-            if (value & 1) newValues[12] = 1;
+        }
+        case 16: {
+            const bitPositions = [15, 14, 13, 12]; // Corresponding newValues indices
+            const maxBitMask = 0b1111; // 4 bits for AllNitros
+            if (value > maxBitMask) {
+                bitPositions.forEach(index => newValues[index] = 1); // Grant all rewards
+            } else {
+                for (let i = 0; i < bitPositions.length; i++) {
+                    if (value >> (bitPositions.length - 1 - i) & 1) {
+                        newValues[bitPositions[i]] = 1;
+                    }
+                }
+            }
             break;
-        case 17:
-            // Logic for RandomVar3
-            // Modify newValues as needed
-            if (value >> 6 & 1) newValues[36] = 1;
-            if (value >> 5 & 1) newValues[37] = 1;
-            if (value >> 4 & 1) newValues[29] = 1;
-            if (value >> 3 & 1) newValues[28] = 1;
-            if (value >> 2 & 1) newValues[27] = 1;
-            if (value >> 1 & 1) newValues[26] = 1;
-            if (value & 1) newValues[25] = 1;
+        }
+        case 17: {
+            const bitPositions = [36, 37, 29, 28, 27, 26, 25]; // Corresponding newValues indices
+            const maxBitMask = 0b1111111; // 7 bits for RandomVar3
+            if (value > maxBitMask) {
+                bitPositions.forEach(index => newValues[index] = 1); // Grant all rewards
+            } else {
+                for (let i = 0; i < bitPositions.length; i++) {
+                    if (value >> (bitPositions.length - 1 - i) & 1) {
+                        newValues[bitPositions[i]] = 1;
+                    }
+                }
+            }
             break;
-        case 24:
-            if (value >> 4 & 1) newValues[24] = 1;
-            if (value >> 3 & 1) newValues[23] = 1;
-            if (value >> 2 & 1) newValues[22] = 1;
-            if (value >> 1 & 1) newValues[21] = 1;
-            if (value & 1) newValues[20] = 1;
+        }
+        case 24: {
+            const bitPositions = [24, 23, 22, 21, 20]; // Corresponding newValues indices
+            const maxBitMask = 0b11111; // 5 bits for this case
+            if (value > maxBitMask) {
+                bitPositions.forEach(index => newValues[index] = 1); // Grant all rewards
+            } else {
+                for (let i = 0; i < bitPositions.length; i++) {
+                    if (value >> (bitPositions.length - 1 - i) & 1) {
+                        newValues[bitPositions[i]] = 1;
+                    }
+                }
+            }
             break;
-        case 25:
-            if (value >> 3 & 1) newValues[34] = 1;
+        }
+        case 25: {
+            const bitPositions = [34]; // Corresponding newValues indices
+            const maxBitMask = 0b1000; // 4th bit for this case
+            if (value > maxBitMask) {
+                bitPositions.forEach(index => newValues[index] = 1); // Grant all rewards
+            } else {
+                if (value >> 3 & 1) newValues[34] = 1;
+            }
             break;
-        case 26:
-            if (value & 1) newValues[38] = 1;
+        }
+        case 26: {
+            const bitPositions = [38]; // Corresponding newValues indices
+            const maxBitMask = 0b1; // 1st bit for this case
+            if (value > maxBitMask) {
+                bitPositions.forEach(index => newValues[index] = 1); // Grant all rewards
+            } else {
+                if (value & 1) newValues[38] = 1;
+            }
             break;
+        }
         default:
             break;
     }
 }
+
+
 
 module.exports = generateNewCode;
 
@@ -608,8 +646,8 @@ const decodeConfig = [
     ["R4Time", 300],       // Round Times
     ["R5Time", 420],       // Round Times // 10
     ["Nitro", 1],          // Rewards // 11
-    ["Nitro Red", 1],      // Rewards // 12
-    ["Nitro Blue", 1],     // Rewards // 13
+    ["Nitro Blue", 1],     // Rewards // 12
+    ["Nitro Red", 1],      // Rewards // 13
     ["Nitro Green", 1],    // Rewards // 14
     ["Nitro Purple", 1],   // Rewards // 15
     ["Turquoise Fire", 1], // Rewards
@@ -698,7 +736,8 @@ document.getElementById('decoderForm').addEventListener('submit', function(event
         setCharset('NEW');
     }
 
-    const savecode = new Savecode(BASE());
+
+    let savecode = new Savecode(BASE());
     const loadSuccess = savecode.Load(playerName, saveCode, 1);
 
     gameStatsBody.innerHTML = ''; // Clear previous results
@@ -714,7 +753,13 @@ document.getElementById('decoderForm').addEventListener('submit', function(event
     if (actionType === 'newCode') {
         newCodeSection.style.display = 'block';
         newCodeElement.textContent = generateNewCode(savecode, playerName);
+
+        savecode = new Savecode(BASE());
+        savecode.Load(playerName, newCodeElement.textContent, 1);
     }
+
+
+
 
     decodeConfig.slice().reverse().forEach(([name, max_val]) => {
         const decodedValue = savecode.Decode(max_val);
@@ -727,17 +772,20 @@ document.getElementById('decoderForm').addEventListener('submit', function(event
         if (max_val === 1) {
             if (decodedValue === 1) {
                 valueCell.classList.add('green-cell');
-            } else {
+            }
+            else {
                 valueCell.classList.add('red-cell');
             }
             row.appendChild(nameCell);
             row.appendChild(valueCell);
             rewardsBody.appendChild(row);
-        } else if (name.includes("Time")) {
+        }
+        else if (name.includes("Time")) {
             row.appendChild(nameCell);
             row.appendChild(valueCell);
             roundTimesBody.appendChild(row);
-        } else {
+        }
+        else {
             row.appendChild(nameCell);
             row.appendChild(valueCell);
             gameStatsBody.appendChild(row);

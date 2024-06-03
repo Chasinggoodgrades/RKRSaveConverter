@@ -11,8 +11,8 @@ const decodeConfig = [
     ["R4Time", 300],       // Round Times
     ["R5Time", 420],       // Round Times // 10
     ["Nitro", 1],          // Rewards // 11
-    ["Nitro Red", 1],      // Rewards // 12
-    ["Nitro Blue", 1],     // Rewards // 13
+    ["Nitro Blue", 1],     // Rewards // 12
+    ["Nitro Red", 1],      // Rewards // 13
     ["Nitro Green", 1],    // Rewards // 14
     ["Nitro Purple", 1],   // Rewards // 15
     ["Turquoise Fire", 1], // Rewards
