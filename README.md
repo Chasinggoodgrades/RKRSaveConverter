@@ -19,7 +19,7 @@ This tool allows users to convert their game saves from version 4.1.5 and earlie
 
 ## Contact
 
-For any questions or issues, please open an issue on GitHub or contact us at:
+For any questions or issues, please open an issue on GitHub or contact me at:
 
 - **GitHub**: [ChasingGoodGrades](https://github.com/ChasingGoodGrades)
 - **Discord**: aches0
