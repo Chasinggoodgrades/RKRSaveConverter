@@ -17,6 +17,12 @@ This tool allows users to convert their game saves from version 4.1.5 and earlie
 
 3. **Convert and View**: The website will convert your save to the new version 4.2.0 and display your rewards and game statistics.
 
+
+## Special Thanks
+- Thanks to these individuals for their work and contributions to save systems in WC3.
+- [TriggerHappy](https://www.hiveworkshop.com/threads/codeless-save-and-load-multiplayer-v3-0-1.278664/) Hiveworkshop GUI implementation. 
+- [PipeDream](https://www.epicwar.com/maps/161985/) EpicWar map implementation.
+
 ## Contact
 
 For any questions or issues, please open an issue on GitHub or contact me at:
