@@ -209,7 +209,7 @@ function generateNewCode(savecode, player_name) {
 
     Object.entries(translationMap).forEach(([oldIndex, newIndex]) => {
         if (newIndex !== null && newIndex !== 'SpecialCase') {
-            if((newIndex === 18 || newIndex === 19 || newIndex === 20 || newIndex === 21 || newIndex === 22) && oldValues[oldIndex] >= 300)
+            if((newIndex === 18 || newIndex === 19 || newIndex === 20 || newIndex === 21 || newIndex === 22) && oldValues[oldIndex] >= 300) // Time
                 newValues[newIndex] = 300;
             else
                 newValues[newIndex] = oldValues[oldIndex];
@@ -248,10 +248,10 @@ function handleSpecialCases(oldIndex, oldValues, newValues) {
             break;
         }
         case 16: {
-            const bitPositions = [15, 14, 13, 12]; // Corresponding newValues indices
+            const bitPositions = [15, 14, 13, 12];
             const maxBitMask = 0b1111; // 4 bits for AllNitros
             if (value > maxBitMask) {
-                bitPositions.forEach(index => newValues[index] = 1); // Grant all rewards
+                bitPositions.forEach(index => newValues[index] = 1);
             } else {
                 for (let i = 0; i < bitPositions.length; i++) {
                     if (value >> (bitPositions.length - 1 - i) & 1) {
@@ -262,10 +262,10 @@ function handleSpecialCases(oldIndex, oldValues, newValues) {
             break;
         }
         case 17: {
-            const bitPositions = [36, 37, 29, 28, 27, 26, 25]; // Corresponding newValues indices
+            const bitPositions = [36, 37, 29, 28, 27, 26, 25];
             const maxBitMask = 0b1111111; // 7 bits for RandomVar3
             if (value > maxBitMask) {
-                bitPositions.forEach(index => newValues[index] = 1); // Grant all rewards
+                bitPositions.forEach(index => newValues[index] = 1);
             } else {
                 for (let i = 0; i < bitPositions.length; i++) {
                     if (value >> (bitPositions.length - 1 - i) & 1) {
@@ -276,10 +276,10 @@ function handleSpecialCases(oldIndex, oldValues, newValues) {
             break;
         }
         case 24: {
-            const bitPositions = [24, 23, 22, 21, 20]; // Corresponding newValues indices
-            const maxBitMask = 0b11111; // 5 bits for this case
+            const bitPositions = [24, 23, 22, 21, 20];
+            const maxBitMask = 0b11111; // 5 bits RandomVar4
             if (value > maxBitMask) {
-                bitPositions.forEach(index => newValues[index] = 1); // Grant all rewards
+                bitPositions.forEach(index => newValues[index] = 1);
             } else {
                 for (let i = 0; i < bitPositions.length; i++) {
                     if (value >> (bitPositions.length - 1 - i) & 1) {
@@ -290,20 +290,20 @@ function handleSpecialCases(oldIndex, oldValues, newValues) {
             break;
         }
         case 25: {
-            const bitPositions = [34]; // Corresponding newValues indices
-            const maxBitMask = 0b1000; // 4th bit for this case
+            const bitPositions = [34];
+            const maxBitMask = 0b1000; // 4th bit for RandomVar5
             if (value > maxBitMask) {
-                bitPositions.forEach(index => newValues[index] = 1); // Grant all rewards
+                bitPositions.forEach(index => newValues[index] = 1);
             } else {
                 if (value >> 3 & 1) newValues[34] = 1;
             }
             break;
         }
         case 26: {
-            const bitPositions = [38]; // Corresponding newValues indices
-            const maxBitMask = 0b1; // 1st bit for this case
+            const bitPositions = [38];
+            const maxBitMask = 0b1; // 1st bit for RandomVar6
             if (value > maxBitMask) {
-                bitPositions.forEach(index => newValues[index] = 1); // Grant all rewards
+                bitPositions.forEach(index => newValues[index] = 1);
             } else {
                 if (value & 1) newValues[38] = 1;
             }
@@ -322,6 +322,7 @@ module.exports = generateNewCode;
 let s1 = [];
 let s2 = 0;
 
+// WC3 Lookup Table
 const tr = [
     0x9927148E, 0x08C7AAFD, 0x1F3EE6D5, 0xDA55BBF6,
     0x6A4AA075, 0xFF97BDE8, 0x9FBC9BDE, 0x46A18A81,
@@ -358,12 +359,14 @@ function random() {
     return s2;
 }
 
+// WC3 SetRandomSeed function
 function SetRandomSeed(seed) {
     s1 = [(seed + (seed < 0 ? 1 << 32 : 0)) % 61, (seed + (seed < 0 ? 1 << 32 : 0)) % 59, (seed + (seed < 0 ? 1 << 32 : 0)) % 53, (seed + (seed < 0 ? 1 << 32 : 0)) % 47];
     s2 = seed;
     random();
 }
 
+// WC3 GetRandomInt function
 function GetRandomInt(l, h) {
     const i = random();
     const j = Math.abs(h - l) + 1;
@@ -387,8 +390,9 @@ class Savecode {
         this.digits = 0;
     }
 
+    // Both functions below use WC3 functionality.
     setSeed(seed) {
-        SetRandomSeed(seed); // Use the new random seed function
+        SetRandomSeed(seed);
     }
 
     GetRandomInt(maxValue) {
@@ -633,6 +637,7 @@ class Savecode {
 }
 module.exports = Savecode;
 },{"../Libs/BigNum":1,"../Libs/BigNum_l":2,"./Base":3,"./NumberGen":5}],7:[function(require,module,exports){
+// New Version Values 4.2.0+
 const decodeConfig = [
     ["Purple Fire", 1],    // Rewards //0
     ["Deaths", 99999],     // Game Stats
@@ -675,7 +680,7 @@ const decodeConfig = [
     ["Butterfly Aura", 1]    // Rewards
 ];
 
-// New section for values_max_vals
+// Values for 4.1.5 versions and previous
 const oldDecodeConfig = [
     ["RandomVar9", 8],    // RandomVar9
     ["RandomVar8", 8],    // RandomVar8
@@ -717,11 +722,49 @@ const { BASE, setCharset } = require('./Base');
 const { decodeConfig, oldDecodeConfig } = require('./decodeConfig');
 const generateNewCode = require('./GenerateNewCode');
 
+let extractedSaveCode = '';
+
+document.getElementById('loadFileButton').addEventListener('click', function() {
+    document.getElementById('fileInput').click();
+});
+
+document.getElementById('fileInput').addEventListener('change', function() {
+    const fileInput = document.getElementById('fileInput');
+    const file = fileInput.files[0];
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const content = e.target.result;
+            extractedSaveCode = processFile(content);
+            document.getElementById('extractedCode').innerText = `Extracted Code: ${extractedSaveCode}`;
+            document.getElementById('extractedCodeSection').style.display = 'block';
+
+            // Update the save code input field with the extracted code
+            document.getElementById('saveCode').value = extractedSaveCode;
+        };
+        reader.readAsText(file);
+    }
+});
+
+function processFile(content) {
+    // Regular expression to match the BlzSetAbilityTooltip line and extract the unique code
+    const regex = /BlzSetAbilityTooltip\(\d+, ".*?\(\)\s*(.*?)", 0\)/;
+    const match = content.match(regex);
+    let code = 'Code not found';
+
+    if (match && match[1]) {
+        code = match[1];
+    }
+
+    return code;
+}
+
 document.getElementById('decoderForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
     const playerName = document.getElementById('playerName').value;
-    const saveCode = document.getElementById('saveCode').value;
+    const saveCode = extractedSaveCode; // Use the extracted save code here
     const actionType = document.getElementById('actionType').value;
     const gameStatsBody = document.getElementById('gameStatsBody');
     const roundTimesBody = document.getElementById('roundTimesBody');
@@ -736,13 +779,12 @@ document.getElementById('decoderForm').addEventListener('submit', function(event
         setCharset('NEW');
     }
 
-
     let savecode = new Savecode(BASE());
     const loadSuccess = savecode.Load(playerName, saveCode, 1);
 
     gameStatsBody.innerHTML = ''; // Clear previous results
-    roundTimesBody.innerHTML = ''; // Clear previous results
-    rewardsBody.innerHTML = ''; // Clear previous results
+    roundTimesBody.innerHTML = '';
+    rewardsBody.innerHTML = '';
     newCodeSection.style.display = 'none'; // Hide new code section
 
     if (!loadSuccess) {
@@ -758,9 +800,6 @@ document.getElementById('decoderForm').addEventListener('submit', function(event
         savecode.Load(playerName, newCodeElement.textContent, 1);
     }
 
-
-
-
     decodeConfig.slice().reverse().forEach(([name, max_val]) => {
         const decodedValue = savecode.Decode(max_val);
         let row = document.createElement('tr');
@@ -769,6 +808,7 @@ document.getElementById('decoderForm').addEventListener('submit', function(event
         nameCell.textContent = name;
         valueCell.textContent = decodedValue;
 
+        // Rewards
         if (max_val === 1) {
             if (decodedValue === 1) {
                 valueCell.classList.add('green-cell');
@@ -780,11 +820,13 @@ document.getElementById('decoderForm').addEventListener('submit', function(event
             row.appendChild(valueCell);
             rewardsBody.appendChild(row);
         }
+        // Round Times
         else if (name.includes("Time")) {
             row.appendChild(nameCell);
             row.appendChild(valueCell);
             roundTimesBody.appendChild(row);
         }
+        // Game Stats
         else {
             row.appendChild(nameCell);
             row.appendChild(valueCell);

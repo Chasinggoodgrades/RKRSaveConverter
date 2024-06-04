@@ -10,11 +10,16 @@
 <div class="container">
     <h1>Save Code Decoder</h1>
     <form id="decoderForm">
-        <label for="playerName">Player Name:</label>
-        <input type="text" id="playerName" name="playerName" required>
+        <label for="playerName">Battle.Net ID:</label>
+        <input type="text" id="playerName" name="playerName" placeholder="YourName#1234" required>
 
-        <label for="saveCode">Save Code:</label>
-        <input type="text" id="saveCode" name="saveCode" required>
+        <button type="button" id="loadFileButton">Select Save File</button>
+        <input type="file" id="fileInput" accept=".pld" style="display: none;">
+
+        <div id="extractedCodeSection" style="display: none;">
+            <h3>Extracted Code</h3>
+            <p id="extractedCode"></p>
+        </div>
 
         <label for="actionType">Action:</label>
         <select id="actionType" name="actionType">
@@ -25,14 +30,11 @@
         <button type="submit">Decode</button>
     </form>
     <div id="results">
-
         <div id="newCodeSection" style="display: none;">
             <h3>New Code</h3>
             <p id="newCode"></p>
         </div>
-
         <h2>Decoded Values</h2>
-
         <h3>Game Stats</h3>
         <table id="gameStatsTable">
             <thead>
@@ -43,7 +45,6 @@
             </thead>
             <tbody id="gameStatsBody"></tbody>
         </table>
-
         <h3>Round Times</h3>
         <table id="roundTimesTable">
             <thead>
@@ -54,7 +55,6 @@
             </thead>
             <tbody id="roundTimesBody"></tbody>
         </table>
-
         <h3>Rewards</h3>
         <table id="rewardsTable">
             <thead>
@@ -65,8 +65,6 @@
             </thead>
             <tbody id="rewardsBody"></tbody>
         </table>
-
-
     </div>
 </div>
 <script src="bundle.js"></script>

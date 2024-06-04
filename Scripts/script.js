@@ -3,11 +3,48 @@ const { BASE, setCharset } = require('./Base');
 const { decodeConfig, oldDecodeConfig } = require('./decodeConfig');
 const generateNewCode = require('./GenerateNewCode');
 
+let extractedSaveCode = '';
+
+document.getElementById('loadFileButton').addEventListener('click', function() {
+    document.getElementById('fileInput').click();
+});
+
+document.getElementById('fileInput').addEventListener('change', function() {
+    const fileInput = document.getElementById('fileInput');
+    const file = fileInput.files[0];
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const content = e.target.result;
+            extractedSaveCode = processFile(content);
+            document.getElementById('extractedCode').innerText = `Extracted Code: ${extractedSaveCode}`;
+            document.getElementById('extractedCodeSection').style.display = 'block';
+
+            document.getElementById('saveCode').value = extractedSaveCode;
+        };
+        reader.readAsText(file);
+    }
+});
+
+function processFile(content) {
+    // honestly wtf is this, it works??
+    const regex = /BlzSetAbilityTooltip\(\d+, ".*?\(\)\s*(.*?)", 0\)/;
+    const match = content.match(regex);
+    let code = 'Code not found';
+
+    if (match && match[1]) {
+        code = match[1];
+    }
+
+    return code;
+}
+
 document.getElementById('decoderForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
     const playerName = document.getElementById('playerName').value;
-    const saveCode = document.getElementById('saveCode').value;
+    const saveCode = extractedSaveCode; // Use the extracted save code here
     const actionType = document.getElementById('actionType').value;
     const gameStatsBody = document.getElementById('gameStatsBody');
     const roundTimesBody = document.getElementById('roundTimesBody');
@@ -21,7 +58,6 @@ document.getElementById('decoderForm').addEventListener('submit', function(event
     else {
         setCharset('NEW');
     }
-
 
     let savecode = new Savecode(BASE());
     const loadSuccess = savecode.Load(playerName, saveCode, 1);
@@ -44,6 +80,7 @@ document.getElementById('decoderForm').addEventListener('submit', function(event
         savecode.Load(playerName, newCodeElement.textContent, 1);
     }
 
+    // MUST DECODE IN REVERSE OF HOW IT WAS SAVED
     decodeConfig.slice().reverse().forEach(([name, max_val]) => {
         const decodedValue = savecode.Decode(max_val);
         let row = document.createElement('tr');
