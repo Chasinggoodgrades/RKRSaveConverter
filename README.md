@@ -10,10 +10,8 @@ This tool allows users to convert their game saves from version 4.1.5 and earlie
 ### Converting Saves and Checking Stats
 
 1. **Visit the Website**: Go to [RKR Save Converter](https://chasinggoodgrades.github.io/RKRSaveConverter).
-2. **Enter Your Save Code**: Input your save code from version 4.1.5 or earlier.
- - Your save file can be obtained from Documents/Warcraft III/CustomMapData/RunKittyRun/SaveSlot_Manual.pld, you'll copy and paste the highlighted below. Before the ". 
-
-![image](https://github.com/Chasinggoodgrades/RKRSaveConverter/assets/31477538/04b9aaa5-ea84-4521-9e1d-2e13b760d036)
+2. **Select Your Save File**: for 4.1.5 and below, it'll be SaveSlot_Manual , for 4.2.0 SaveSlot_RKR 
+ - Your save file can be obtained from Documents/Warcraft III/CustomMapData/RunKittyRun/
 
 3. **Convert and View**: The website will convert your save to the new version 4.2.0 and display your rewards and game statistics.
 
