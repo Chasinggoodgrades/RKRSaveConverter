@@ -5,6 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Save Code Decoder</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .form-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            margin-left: 10px;
+            font-size: 14px;
+            color: #ccc;
+        }
+        #fileLocation {
+            flex: 2;
+            text-align: left;
+        }
+        .form-group button {
+            flex: 1;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -13,8 +33,11 @@
         <label for="playerName">Battle.Net ID:</label>
         <input type="text" id="playerName" name="playerName" placeholder="YourName#1234" required>
 
-        <button type="button" id="loadFileButton">Select Save File</button>
-        <input type="file" id="fileInput" accept=".pld" style="display: none;">
+        <div class="form-group">
+            <button type="button" id="loadFileButton">Select Save File</button>
+            <label id="fileLocation">Documents/Warcraft III/CustomMapData/RunKittyRun/SaveSlot_Manual.pld</label>
+            <input type="file" id="fileInput" accept=".pld" style="display: none;">
+        </div>
 
         <div id="extractedCodeSection" style="display: none;">
             <h3>Extracted Code</h3>
@@ -29,6 +52,7 @@
 
         <button type="submit">Decode</button>
     </form>
+
     <div id="results">
         <div id="newCodeSection" style="display: none;">
             <h3>New Code</h3>
